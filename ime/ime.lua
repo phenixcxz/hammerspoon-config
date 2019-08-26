@@ -16,6 +16,9 @@ local app2Ime = {
     {'/Applications/Kindle.app', 'English'},
     {'/Applications/NeteaseMusic.app', 'Chinese'},
     {'/Applications/微信.app', 'Chinese'},
+	{
+	'/Applications/QQ.app', "Chinese"
+	},
     {'/Applications/System Preferences.app', 'English'},
     {'/Applications/Dash.app', 'English'},
     {'/Applications/MindNode.app', 'Chinese'},
