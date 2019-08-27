@@ -15,16 +15,19 @@ local app2Ime = {
     {'/Applications/DingTalk.app', 'Chinese'},
     {'/Applications/Kindle.app', 'English'},
     {'/Applications/NeteaseMusic.app', 'Chinese'},
-    {'/Applications/微信.app', 'Chinese'},
-	{
-	'/Applications/QQ.app', "Chinese"
-	},
+    {'/Applications/WeChat.app', 'Chinese'},
+	{'/Applications/QQ.app', "Chinese"},
+	{'/Applications/Safari.app',"Chinese"},
+	{'/Applications/VNote.app','Chinese'},
     {'/Applications/System Preferences.app', 'English'},
     {'/Applications/Dash.app', 'English'},
     {'/Applications/MindNode.app', 'Chinese'},
     {'/Applications/Preview.app', 'Chinese'},
     {'/Applications/wechatwebdevtools.app', 'English'},
     {'/Applications/Sketch.app', 'English'},
+    {'/Applications/Sublime Text.app', 'English'},
+    {'/Applications/MarginNote 3.app', 'Chinese'},
+    {'/Applications/PyCharm.app', 'English'},
 }
 
 function updateFocusAppInputMethod()
