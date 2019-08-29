@@ -28,6 +28,8 @@ local app2Ime = {
     {'/Applications/Sublime Text.app', 'English'},
     {'/Applications/MarginNote 3.app', 'Chinese'},
     {'/Applications/PyCharm.app', 'English'},
+	{'/Applications/Microsoft OneNote.app', 'Chinese'},
+    {'/Applications/SSH Sheel.app', 'Chinese'},
 }
 
 function updateFocusAppInputMethod()
