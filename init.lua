@@ -9,9 +9,13 @@ require "window.window"
 require "clipboard.clipboard"
 require "statuslets.statuslets"
 require "volume.volume"
-require "weather.weather"
 require "speaker.speaker"
+require "fanyi.fanyi"
 
+hs.loadSpoon('Calendar')
+hs.loadSpoon('DeepLTranslate')
+hs.loadSpoon('LookupSelection')
+hs.loadSpoon('ColorPicker')
 
 -- Private use
 if (hs.host.localizedName() == 'kaboom的MacBook Pro') then

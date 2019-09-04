@@ -1,0 +1,176 @@
+[
+  {
+    "Constant" : [
+
+    ],
+    "submodules" : [
+
+    ],
+    "Function" : [
+
+    ],
+    "Variable" : [
+      {
+        "doc" : "Logger object used within the Spoon. Can be accessed to set the default log level for the messages coming from the Spoon.",
+        "name" : "logger",
+        "def" : "LookupSelection.logger",
+        "stripped_doc" : [
+          "Logger object used within the Spoon. Can be accessed to set the default log level for the messages coming from the Spoon."
+        ],
+        "notes" : [
+
+        ],
+        "signature" : "LookupSelection.logger",
+        "type" : "Variable",
+        "returns" : [
+
+        ],
+        "desc" : "Logger object used within the Spoon. Can be accessed to set the default log level for the messages coming from the Spoon.",
+        "parameters" : [
+
+        ]
+      }
+    ],
+    "stripped_doc" : [
+
+    ],
+    "type" : "Module",
+    "Deprecated" : [
+
+    ],
+    "desc" : "Show a popup window with the currently selected word in lexicon, notes, online help",
+    "Constructor" : [
+
+    ],
+    "doc" : "Show a popup window with the currently selected word in lexicon, notes, online help\n\nThe spoon uses hs.urlevent.openURL(\"dict:\/\/\" .. text) \n\nDownload: [https:\/\/github.com\/Hammerspoon\/Spoons\/raw\/master\/Spoons\/LookupSelection.spoon.zip](https:\/\/github.com\/Hammerspoon\/Spoons\/raw\/master\/Spoons\/LookupSelection.spoon.zip)",
+    "Method" : [
+      {
+        "doc" : "Get the current selected text in the frontmost window and display a translation popup with the translation between the specified languages\n\nReturns:\n * The LookupSelection object",
+        "name" : "openLexicon",
+        "def" : "LookupSelection:openLexicon()",
+        "stripped_doc" : [
+          "Get the current selected text in the frontmost window and display a translation popup with the translation between the specified languages",
+          ""
+        ],
+        "notes" : [
+
+        ],
+        "signature" : "LookupSelection:openLexicon()",
+        "type" : "Method",
+        "returns" : [
+          " * The LookupSelection object"
+        ],
+        "desc" : "Get the current selected text in the frontmost window and display a translation popup with the translation between the specified languages",
+        "parameters" : [
+
+        ]
+      },
+      {
+        "doc" : "Binds hotkeys for LookupSelection\n\nParameters:\n * mapping - A table containing hotkey modifier\/key details for the following items:\n  * `lexicon` - open in lexicon app\n  * `neue_notiz` -  create new note in notes app\n  * `hsdocs` -  display online help\n\nSample value for `mapping`:\n```\n```",
+        "name" : "bindHotkeys",
+        "def" : "LookupSelection:bindHotkeys(mapping)",
+        "stripped_doc" : [
+          "Binds hotkeys for LookupSelection",
+          ""
+        ],
+        "notes" : [
+
+        ],
+        "signature" : "LookupSelection:bindHotkeys(mapping)",
+        "type" : "Method",
+        "returns" : [
+
+        ],
+        "desc" : "Binds hotkeys for LookupSelection",
+        "parameters" : [
+          " * mapping - A table containing hotkey modifier\/key details for the following items:",
+          "  * `lexicon` - open in lexicon app",
+          "  * `neue_notiz` -  create new note in notes app",
+          "  * `hsdocs` -  display online help",
+          "",
+          "Sample value for `mapping`:",
+          "```",
+          "```"
+        ]
+      }
+    ],
+    "Command" : [
+
+    ],
+    "items" : [
+      {
+        "doc" : "Logger object used within the Spoon. Can be accessed to set the default log level for the messages coming from the Spoon.",
+        "name" : "logger",
+        "def" : "LookupSelection.logger",
+        "stripped_doc" : [
+          "Logger object used within the Spoon. Can be accessed to set the default log level for the messages coming from the Spoon."
+        ],
+        "notes" : [
+
+        ],
+        "signature" : "LookupSelection.logger",
+        "type" : "Variable",
+        "returns" : [
+
+        ],
+        "desc" : "Logger object used within the Spoon. Can be accessed to set the default log level for the messages coming from the Spoon.",
+        "parameters" : [
+
+        ]
+      },
+      {
+        "doc" : "Binds hotkeys for LookupSelection\n\nParameters:\n * mapping - A table containing hotkey modifier\/key details for the following items:\n  * `lexicon` - open in lexicon app\n  * `neue_notiz` -  create new note in notes app\n  * `hsdocs` -  display online help\n\nSample value for `mapping`:\n```\n```",
+        "name" : "bindHotkeys",
+        "def" : "LookupSelection:bindHotkeys(mapping)",
+        "stripped_doc" : [
+          "Binds hotkeys for LookupSelection",
+          ""
+        ],
+        "notes" : [
+
+        ],
+        "signature" : "LookupSelection:bindHotkeys(mapping)",
+        "type" : "Method",
+        "returns" : [
+
+        ],
+        "desc" : "Binds hotkeys for LookupSelection",
+        "parameters" : [
+          " * mapping - A table containing hotkey modifier\/key details for the following items:",
+          "  * `lexicon` - open in lexicon app",
+          "  * `neue_notiz` -  create new note in notes app",
+          "  * `hsdocs` -  display online help",
+          "",
+          "Sample value for `mapping`:",
+          "```",
+          "```"
+        ]
+      },
+      {
+        "doc" : "Get the current selected text in the frontmost window and display a translation popup with the translation between the specified languages\n\nReturns:\n * The LookupSelection object",
+        "name" : "openLexicon",
+        "def" : "LookupSelection:openLexicon()",
+        "stripped_doc" : [
+          "Get the current selected text in the frontmost window and display a translation popup with the translation between the specified languages",
+          ""
+        ],
+        "notes" : [
+
+        ],
+        "signature" : "LookupSelection:openLexicon()",
+        "type" : "Method",
+        "returns" : [
+          " * The LookupSelection object"
+        ],
+        "desc" : "Get the current selected text in the frontmost window and display a translation popup with the translation between the specified languages",
+        "parameters" : [
+
+        ]
+      }
+    ],
+    "Field" : [
+
+    ],
+    "name" : "LookupSelection"
+  }
+]
