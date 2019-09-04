@@ -30,6 +30,7 @@ local app2Ime = {
     {'/Applications/PyCharm.app', 'English'},
 	{'/Applications/Microsoft OneNote.app', 'Chinese'},
     {'/Applications/SSH Sheel.app', 'Chinese'},
+    {'/Applications/Mate Translate.app', 'Chinese'},
 }
 
 function updateFocusAppInputMethod()

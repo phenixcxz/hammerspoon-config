@@ -82,7 +82,7 @@ function obj:translatePopup(text)
    local url = "https://www.deepl.com/translator"
 
    self.modal_keys = hs.hotkey.modal.new()
-   self.modal_keys:bind({"cmd", "alt", "ctrl"}, "O", 
+   self.modal_keys:bind({"cmd", "alt"}, "O", 
                               hs.fnutils.partial(self.modalOKCallback, self))
    self.modal_keys:enter()
    -- Persist the window between calls to reduce startup time on subsequent calls
@@ -129,7 +129,7 @@ function obj:rephrasePopup(text)
    local url = "https://www.deepl.com/translator"
 
    self.modal_keys = hs.hotkey.modal.new()
-   self.modal_keys:bind({"cmd", "alt", "ctrl"}, "E", 
+   self.modal_keys:bind({"cmd","ctrl"}, "E", 
                               hs.fnutils.partial(self.modalOKCallback, self))
    self.modal_keys:enter()
    -- Persist the window between calls to reduce startup time on subsequent calls
@@ -226,7 +226,8 @@ end
 
 
 function obj:bindHotkeys(mapping)
-   local def = {
+
+   local mapping = {
    }
    for action,key in pairs(mapping) do
       if action == "translate" then

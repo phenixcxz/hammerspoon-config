@@ -14,10 +14,11 @@ require "fanyi.fanyi"
 
 hs.loadSpoon('Calendar')
 hs.loadSpoon('DeepLTranslate')
-hs.loadSpoon('LookupSelection')
-hs.loadSpoon('ColorPicker')
+hs.loadSpoon('SpeedMenu')
 
 -- Private use
 if (hs.host.localizedName() == 'kaboom的MacBook Pro') then
 	require("autoscript.autoscript")
 end
+
+
