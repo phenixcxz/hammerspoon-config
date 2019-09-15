@@ -227,8 +227,7 @@ end
 
 function obj:bindHotkeys(mapping)
 
-   local mapping = {
-   }
+	translate = { { "ctrl", "alt", "cmd" }, "E" }
    for action,key in pairs(mapping) do
       if action == "translate" then
          def.translate = hs.fnutils.partial(self.translateSelectionPopup, self)

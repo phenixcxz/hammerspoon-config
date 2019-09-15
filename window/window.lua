@@ -22,6 +22,8 @@ function winresize(how)
       newrect = {0,0.5,1,0.5}
    elseif how == "max" then
       newrect = hs.layout.maximized
+   elseif how == "min" then
+      newrect = hs.layout.minimized
    elseif how == "left_third" or how == "hthird-0" then
       newrect = {0,0,1/3,1}
    elseif how == "middle_third_h" or how == "hthird-1" then
@@ -57,6 +59,18 @@ function toggle_window_maximized()
    else
       frameCache[win:id()] = win:frame()
       win:maximize()
+   end
+end
+
+-- Toggle a window between its normal size, and being maximized
+function toggle_window_minimized()
+   local win = hs.window.focusedWindow()
+   if frameCache[win:id()] then
+      win:setFrame(frameCache[win:id()])
+      frameCache[win:id()] = nil
+   else
+      frameCache[win:id()] = win:frame()
+      win:minimize()
    end
 end
 
@@ -138,6 +152,8 @@ hs.hotkey.bind({"ctrl", "alt"}, "Down",  down_third)
 -- Maximized
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F",     hs.fnutils.partial(winresize, "max"))
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "Up",    hs.fnutils.partial(winresize, "max"))
+
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "T",     hs.fnutils.partial(winresize, "min"))
 
 -- Move between screens
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "Left",  hs.fnutils.partial(winmovescreen, "left"))

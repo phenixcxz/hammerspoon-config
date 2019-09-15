@@ -38,4 +38,6 @@ hs.hotkey.bind({"alt","ctrl"},"T",open("Terminal"))
 hs.hotkey.bind({"alt"},'1',open("Terminal"))
 hs.hotkey.bind({"alt"},'2',open("MarginNote 3"))
 hs.hotkey.bind({"alt"},"3",open("VNote"))
+hs.hotkey.bind({"alt"},"4",open("Microsoft OneNote"))
+hs.hotkey.bind({"alt"},"D",open(""))
 
