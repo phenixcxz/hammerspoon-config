@@ -52,7 +52,7 @@
 
 - Install [Hammerspoon](https://www.hammerspoon.org/)
 - `rm -r ~/.hammerspoon`
-- `git clone https://github.com/wangshub/hammerspoon-config.git ~/.hammerspoon`
+- `git clone https://github.com/phenixcxz/hammerspoon-config.git ~/.hammerspoon`
 
 ## License
 
