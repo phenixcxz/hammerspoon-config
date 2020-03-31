@@ -16,15 +16,17 @@ local function data_diff()
     --电量百分比计算
     obj.kbin = string.format("%3.0f",hs.battery.percentage()) .. '%'
     --剩余时间计算
-    if (hs.battery.timeRemaining() < 0) then
-        obj.kbout = '计算中'
-    else 
-        if (hs.battery.powerSource() == "Battery Power" ) then 
-            obj.kbout = string.format("%2.0f:%02d",hs.battery.timeRemaining()/60-0.5,hs.battery.timeRemaining()%60)
 
-        else   
-            obj.kbout = string.format("%2.0f:%02d",hs.battery.timeToFullCharge()/60-0.5,hs.battery.timeToFullCharge()%60) 
-        end
+    if (hs.battery.isCharging()) then 
+        obj.kbout = string.format("%2.0f:%02d",hs.battery.timeToFullCharge()/60-0.5,hs.battery.timeToFullCharge()%60) 
+    elseif (hs.battery.timeRemaining() < 0) then
+        obj.kbout = '计算中'
+    elseif(hs.battery.powerSource() == "Battery Power" ) then 
+        obj.kbout = string.format("%2.0f:%02d",hs.battery.timeRemaining()/60-0.5,hs.battery.timeRemaining()%60)
+
+    --    else   
+    --        obj.kbout = string.format("%2.0f:%02d",hs.battery.timeToFullCharge()/60-0.5,hs.battery.timeToFullCharge()%60) 
+       -- end
     end
 
  --   local powe = string.format("%2.2f",hs.battery.watts()) .. 'W'
