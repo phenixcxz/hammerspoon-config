@@ -2,32 +2,37 @@ local function Chinese()
     hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
 end
 
+
+--local function Chinese()
+--    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
+--end
+
 local function English()
     hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
 end
 
 -- app to expected ime config
 local app2Ime = {
-    {'/Applications/iTerm.app', 'English'},
-    {'/Applications/Xcode.app', 'English'},
+    {'/Applications/iTerm.app', 'Chinese'},
+    {'/Applications/Xcode.app', 'Chinese'},
     {'/Applications/Google Chrome.app', 'Chinese'},
-    {'/System/Library/CoreServices/Finder.app', 'English'},
+    {'/System/Library/CoreServices/Finder.app', 'Chinese'},
     {'/Applications/DingTalk.app', 'Chinese'},
-    {'/Applications/Kindle.app', 'English'},
+    {'/Applications/Kindle.app', 'Chinese'},
     {'/Applications/NeteaseMusic.app', 'Chinese'},
     {'/Applications/WeChat.app', 'Chinese'},
 	{'/Applications/QQ.app', "Chinese"},
 	{'/Applications/Safari.app',"Chinese"},
 	{'/Applications/VNote.app','Chinese'},
-    {'/Applications/System Preferences.app', 'English'},
-    {'/Applications/Dash.app', 'English'},
+    {'/Applications/System Preferences.app', 'Chinese'},
+    {'/Applications/Dash.app', 'Chinese'},
     {'/Applications/MindNode.app', 'Chinese'},
     {'/Applications/Preview.app', 'Chinese'},
-    {'/Applications/wechatwebdevtools.app', 'English'},
-    {'/Applications/Sketch.app', 'English'},
-    {'/Applications/Sublime Text.app', 'English'},
+    {'/Applications/wechatwebdevtools.app', 'Chinese'},
+    {'/Applications/Sketch.app', 'Chinese'},
+    {'/Applications/Sublime Text.app', 'Chinese'},
     {'/Applications/MarginNote 3.app', 'Chinese'},
-    {'/Applications/PyCharm.app', 'English'},
+    {'/Applications/PyCharm.app', 'Chinese'},
 	{'/Applications/Microsoft OneNote.app', 'Chinese'},
     {'/Applications/SSH Sheel.app', 'Chinese'},
     {'/Applications/Mate Translate.app', 'Chinese'},
@@ -46,11 +51,11 @@ function updateFocusAppInputMethod()
         end
     end
 
-    if ime == 'English' then
-        English()
-    else
-        Chinese()
-    end
+--    if ime == 'English' then
+--        English()
+--    else
+    Chinese()
+   -- end
 end
 
 -- helper hotkey to figure out the app path and name of current focused window

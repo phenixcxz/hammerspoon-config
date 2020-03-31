@@ -1,4 +1,4 @@
-local hyper = {'ctrl', 'cmd'}
+hyper = {'ctrl', 'cmd'}
 
 hs.hotkey.bind({"cmd"}, "L", hs.caffeinate.systemSleep)
 -- hs.hotkey.bind({"alt","ctrl"},"T",hs.application.launch.launchOrFocus("Terminal"))
