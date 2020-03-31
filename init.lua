@@ -9,12 +9,14 @@ require "window.window"
 require "clipboard.clipboard"
 require "sleep.sleep"
 --require "statuslets.statuslets"
-require "volume.volume"
+--require "volume.volume"
+--require "battery.battery"
 --require "speaker.speaker"
 
 --hs.loadSpoon('Calendar')
 --hs.loadSpoon('DeepLTranslate')
 hs.loadSpoon('SpeedMenu')
+hs.loadSpoon('Battery')
 
 -- Private use
 --if (hs.host.localizedName() == 'kaboom的MacBook Pro') then
