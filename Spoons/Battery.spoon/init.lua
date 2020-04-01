@@ -12,21 +12,23 @@ local function data_diff()
     obj.kbin = string.format("%3.0f",hs.battery.percentage()) .. '%'
     --剩余时间计算
 
-    if (hs.battery.isCharging()) then   --充电中
+    if (hs.battery.amperage()>0) then   --充电中
         obj.kbin = obj.kbin .. '充'
         local timeToFull = hs.battery.timeToFullCharge()
         local timeM = timeToFull%60
         local timeH = (timeToFull-timeM)/60
 
         if(timeToFull >0) then
-            obj.kbout = string.format("%2.0f:%02d",timeH,timeM) .. '电'      --未充满
-        elseif(hs.battery.timeToFullCharge() == 0) then         --充满
-            obj.kbout = string.format("%2.0f:%02d",timeH,timeM) .. '满'
+            obj.kbout = string.format("%02d:%02d",timeH,timeM) .. '电'      --未充满
+        elseif(timeToFull == 0) then         --充满
+            obj.kbout = string.format("%02d:%02d",timeH,timeM) .. '满'
+      --  elseif(hs.battery.amperage()>0) then
+      --      obj.kbout = '00:00 满'
         else
-            obj.kbout= ' ---- 电'  --计算中
+            obj.kbout= ' ----- 电'  --计算中
         end
     elseif (hs.battery.timeRemaining() < 0) then    --没有充电，计算中
-        obj.kbout = ' ---- '
+        obj.kbout = ' ----- '
     elseif(hs.battery.powerSource() == "Battery Power" ) then   --剩余电量
         local timeReamin = hs.battery.timeRemaining()
         local timeRm = timeReamin%60
