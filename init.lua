@@ -13,7 +13,7 @@ require "sleep.sleep"
 --require "battery.battery"
 --require "speaker.speaker"
 
-hs.loadSpoon('Calendar')
+--hs.loadSpoon('Calendar')
 --hs.loadSpoon('DeepLTranslate')
 hs.loadSpoon('SpeedMenu')
 hs.loadSpoon('Battery')

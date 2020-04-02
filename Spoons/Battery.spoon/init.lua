@@ -33,7 +33,7 @@ local function data_diff()
         local timeReamin = hs.battery.timeRemaining()
         local timeRm = timeReamin%60
         local timeRh = (timeReamin- timeRm)/60
-        obj.kbout = string.format("%2.0f:%02d",timeRh,timeRh)
+        obj.kbout = string.format("%2d:%02d",timeRh,timeRm)
     end
 
     local disp_str = 'Cap:' .. obj.kbin  .. '\nTim:' .. obj.kbout  

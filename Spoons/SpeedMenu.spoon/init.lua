@@ -24,6 +24,7 @@ local function data_diff()
     local out_seq = hs.execute(obj.outstr)
     local in_diff = in_seq - obj.inseq
     local out_diff = out_seq - obj.outseq
+
     if in_diff/1024 > 1024 then
         obj.kbin = string.format("%4.2f", in_diff/1024/1024) .. ' mb/s'
     else
@@ -32,8 +33,12 @@ local function data_diff()
     if out_diff/1024 > 1024 then
         obj.kbout = string.format("%4.2f", out_diff/1024/1024) .. ' mb/s'
     else
-        obj.kbout = string.format("%4.2f", out_diff/1024) .. ' kb/s'
+        obj.kbout = string.format("%4.02f", out_diff/1024) .. ' kb/s'
     end
+    -- if(in_diff/1024 >1024) then 
+    --     obj.kbin = string.format("%02d.%02d",)
+
+
     local disp_str = '⥄ ' .. obj.kbout .. '\n⥂ ' .. obj.kbin
     if obj.darkmode then
         obj.disp_str = hs.styledtext.new(disp_str, {font={size=9.0, color={hex="#FFFFFF"}}})
