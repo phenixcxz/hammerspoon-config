@@ -22,8 +22,6 @@ local function data_diff()
             obj.kbout = string.format("%02d:%02d",timeH,timeM) .. '电'      --未充满
         elseif(timeToFull == 0) then         --充满
             obj.kbout = string.format("%02d:%02d",timeH,timeM) .. '满'
-      --  elseif(hs.battery.amperage()>0) then
-      --      obj.kbout = '00:00 满'
         else
             obj.kbout= ' ----- 电'  --计算中
         end
@@ -87,7 +85,7 @@ end
 function obj:rescan()
     obj.menubar:setMenu(populateMenu)
     data_diff()
-    timer = hs.timer.new(5, data_diff)
+    timer = hs.timer.new(1, data_diff)
     timer:start()
 end
 

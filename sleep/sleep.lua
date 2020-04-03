@@ -26,6 +26,9 @@ end
 
 --hs.hotkey.bind({'alt'},'h', bluetoothSwitch(0) )
 
+local function Chinese()
+    hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
+end
 
 function caffeinateCallback(eventType)
     if (eventType == hs.caffeinate.watcher.screensDidLock) then
@@ -34,6 +37,7 @@ function caffeinateCallback(eventType)
     elseif (eventType == hs.caffeinate.watcher.screensDidUnlock) then
       print("screensDidUnlock")
       connectBluetooth()
+      Chinese()     --解锁屏幕自动设定输入法为搜狗输入法
     end
 
     if (eventType == hs.caffeinate.watcher.systemWillSleep) then
