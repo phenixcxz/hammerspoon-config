@@ -41,4 +41,5 @@ hs.hotkey.bind({"alt"},"3",open("VNote"))
 hs.hotkey.bind({"alt"},"4",open("Microsoft OneNote"))
 hs.hotkey.bind({"alt"},"D",open(""))
 hs.hotkey.bind({"ctrl"},"N",open("Notion"))
+hs.hotkey.bind({"alt"},"T",open("Typora"))
 

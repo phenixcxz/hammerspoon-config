@@ -1,11 +1,13 @@
 local bleDeviceID = '00-16-94-3c-8e-f7'
 
+--开关wifi
 function wifiSwitch(state)
-  -- state: 0(off), 1(on)
+  -- state: off, on
   cmd = "/usr/sbin/networksetup -setairportpower en0 "..(state)
   result = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
 end
 
+--开关蓝牙
 function bluetoothSwitch(state)
   -- state: 0(off), 1(on)
   cmd = "/usr/local/bin/blueutil --power "..(state)
@@ -24,11 +26,16 @@ function connectBluetooth()
   result = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
 end
 
---hs.hotkey.bind({'alt'},'h', bluetoothSwitch(0) )
-
+--解锁屏幕自动设定输入法为搜狗输入法
 local function Chinese()
     hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
 end
+
+--解锁屏幕自动设定输入法为百度输入法
+-- local function Chinese()
+--    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
+-- end
+
 
 function caffeinateCallback(eventType)
     if (eventType == hs.caffeinate.watcher.screensDidLock) then
@@ -49,7 +56,6 @@ function caffeinateCallback(eventType)
       print("screensDidUnlock")
       bluetoothSwitch(1)
       wifiSwitch(on)
-    --  connectBluetooth()
     end
 end
 

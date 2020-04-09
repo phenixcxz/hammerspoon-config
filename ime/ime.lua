@@ -2,7 +2,7 @@ local function Chinese()
     hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
 end
 
-Chinese()
+--Chinese()
 -- --local function Chinese()
 -- --    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
 -- --end
