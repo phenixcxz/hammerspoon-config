@@ -8,18 +8,16 @@ require "window.window"		--快捷键调节窗口大小
 --require "wifi.wifi"
 require "clipboard.clipboard"	--剪切板记录
 require "sleep.sleep"		--睡眠wifi蓝牙管理
+--require "translate.translate"
 --require "statuslets.statuslets"
 --require "volume.volume"
 --require "battery.battery"
 --require "speaker.speaker"
---require "audio.audio"
+--require "audio.audio"						  	
 --hs.loadSpoon('Calendar')
 --hs.loadSpoon('DeepLTranslate')
 hs.loadSpoon('SpeedMenu')	--网速显示
 hs.loadSpoon('Battery')		--电池信息显示
+--hs.loadSpoon('HSearch')
 
--- Private use
---if (hs.host.localizedName() == 'kaboom的MacBook Pro') then
---	require("autoscript.autoscript")
---end
 

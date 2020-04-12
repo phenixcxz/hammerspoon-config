@@ -253,4 +253,16 @@ function obj:toggleShow()
     end
 end
 
+
+--if spoon.HSearch then
+--    hsearch_keys = {"alt", "G"}
+
+local hotkey = require "hs.hotkey"
+hs.hotkey.bind(hyper,"U", function() spoon.HSearch:toggleShow() end)
+--    if string.len(hsearch_keys[2]) > 0 then
+--        spoon.ModalMgr.supervisor:bind(hsearch_keys, hsearch, 'Launch Hammerspoon Search', function() spoon.HSearch:toggleShow() end)
+--    end
+--end
+--spoon.HSearch:toggleShow()
+
 return obj

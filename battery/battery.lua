@@ -1,214 +1,80 @@
---- === SpeedMenu ===
----
---- Menubar netspeed meter
----
---- Download: [https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpeedMenu.spoon.zip](https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpeedMenu.spoon.zip)
+-- module: Battery notifications
+local m = {}
 
--- local obj={}
--- obj.__index = obj
+local utime = require('utils.time')
 
--- function obj:init()
---     self.menubar = hs.menubar.new()
---     obj:rescan()
--- end
-local frequence = 30
-local battery = hs.menubar.new()
-local jumpcut = hs.menubar.new()
-battery:setTooltip("Battery")
+local isCharged   = hs.battery.isCharged()
+local percentage  = hs.battery.percentage()
+local powerSource = hs.battery.powerSource()
 
-function setTitle()
---	battery:setTitle("test")
-    kbin = string.format("%3.0f",hs.battery.percentage()) .. '%'
-    --剩余时间计算
+local notifiedAt = {
+  [20] = false,
+  [15] = false,
+  [10] = false,
+  [5]  = false,
+}
 
-    if (hs.battery.isCharging()) then 
-        kbout = string.format("%2.0f:%02d",hs.battery.timeToFullCharge()/60-0.5,hs.battery.timeToFullCharge()%60) 
-    elseif (hs.battery.timeRemaining() < 0) then
-        kbout = '计算中'
-    elseif(hs.battery.powerSource() == "Battery Power" ) then 
-        kbout = string.format("%2.0f:%02d",hs.battery.timeRemaining()/60-0.5,hs.battery.timeRemaining()%60)
+-- send a notification about the battery status
+local function batteryNotify(statusType, subTitle, message)
+  hs.notify.new({
+    title = statusType .. ' Status',
+    subTitle = subTitle,
+    informativeText = message,
+    contentImage = m.cfg.icon,
+    hasActionButton = false,
+    autoWithdraw = true,
+  }):send()
+end
+
+-- battery watching callback, which sends a notification if charging status
+-- has changed, or power thresholds have been reached.
+local function watchFunc()
+  local newPercentage  = hs.battery.percentage()
+  local newIsCharged   = hs.battery.isCharged()
+  local newPowerSource = hs.battery.powerSource()
+
+  if newPercentage < 100 then
+    isCharged = false
+  end
+
+  if newIsCharged ~= isCharged
+    and newPercentage == 100
+    and newPowerSource == 'AC Power'
+  then
+    batteryNotify('Battery', 'Charged Completely!')
+    isCharged = true
+  end
+
+  local shouldNotifyTime = false
+  for threshold, notified in pairs(notifiedAt) do
+    if newPercentage > threshold then
+      -- reset because we've gone above this threshold
+      notifiedAt[threshold] = false
+    elseif not notified then
+      -- newPercentage <= threshold so we should notify
+      notifiedAt[threshold] = true
+      shouldNotifyTime = true
     end
+  end
+  if shouldNotifyTime then
+    local timeRemaining = utime.prettyMinutes(hs.battery.timeRemaining())
+    batteryNotify('Battery', 'Time Remaining:', timeRemaining)
+  end
 
- --   local powe = string.format("%2.2f",hs.battery.watts()) .. 'W'
- --   local vol = string.format("%2.2f",hs.battery.voltage()/1000) .. 'V'
-
-   -- local disp_str = 'Cap:' .. obj.kbin .. '  Pow:' .. powe .. '\nTim:' .. obj.kbout .. '   Vol:' .. vol 
-    local disp_str = 'Cap:' .. kbin  .. '\nTim:' .. kbout  
-   -- if hs.darkmode then
-   --     disp_str = hs.styledtext.new(disp_str, {font={size=9.0, color={hex="#FFFFFF"}}})
-   -- else
-	disp_str = hs.styledtext.new(disp_str, {font={size=9.0, color={hex="#000000"}}})
-	battery:setTitle(disp_str)
+  if newPowerSource ~= powerSource then
+    batteryNotify('Power Source', 'Current Source:', newPowerSource)
+    powerSource = newPowerSource
+  end
 end
 
-populateMenu = function(key)
-   setTitle() -- Update the counter every time the menu is refreshed
-   nowcap = string.format("%3.0f", hs.battery.capacity()/hs.battery.maxCapacity()*100) .. ' %'
-
-   health = string.format("%2.0f", hs.battery.maxCapacity()/hs.battery.designCapacity()*100) .. ' %'
-   menuData = {}
-   -- if obj.interface then
-
-    table.insert(menuData, {
-        title = "实际电量 " .. nowcap
-
-    })
-    table.insert(menuData, {
-        title = "当前功率 " .. hs.battery.watts() .. 'W'
-
-    })
-    table.insert(menuData, {
-        title = "当前电流 " .. hs.battery.amperage() .. 'mA'
-
-    })
-    table.insert(menuData, {
-        title = "当前电压" .. hs.battery.voltage() .. 'mV'
-    })        
-
-    table.insert(menuData, {
-         title = "预设容量:" .. hs.battery.designCapacity() .. 'mAh'
-     })
-    table.insert(menuData, {
-         title = "当前最大容量:" .. hs.battery.maxCapacity() .. 'mAh'
-     })
-    table.insert(menuData, {
-         title = "电池健康:" .. health
-     })
-   return menuData
+function m.start()
+  m.watcher = hs.battery.watcher.new(watchFunc)
+  m.watcher:start()
 end
 
-setTitle()
-timer = hs.timer.new(30, setTitle)
-timer:start()
+function m.stop()
+  m.watcher:stop()
+  m.watcher = nil
+end
 
-battery:setMenu(populateMenu)
-  --  hs.menubar:setClickCallback(rescan())
---end
-
---timer = hs.timer.doEvery(30, data_diff)
---timer:start()
--- local function data_diff()
---     --电量百分比计算
---     obj.kbin = string.format("%3.0f",hs.battery.percentage()) .. '%'
---     --剩余时间计算
-
---     if (hs.battery.isCharging()) then 
---         obj.kbout = string.format("%2.0f:%02d",hs.battery.timeToFullCharge()/60-0.5,hs.battery.timeToFullCharge()%60) 
---     elseif (hs.battery.timeRemaining() < 0) then
---         obj.kbout = '计算中'
---     elseif(hs.battery.powerSource() == "Battery Power" ) then 
---         obj.kbout = string.format("%2.0f:%02d",hs.battery.timeRemaining()/60-0.5,hs.battery.timeRemaining()%60)
---     end
-
---  --   local powe = string.format("%2.2f",hs.battery.watts()) .. 'W'
---  --   local vol = string.format("%2.2f",hs.battery.voltage()/1000) .. 'V'
-
---    -- local disp_str = 'Cap:' .. obj.kbin .. '  Pow:' .. powe .. '\nTim:' .. obj.kbout .. '   Vol:' .. vol 
---     local disp_str = 'Cap:' .. obj.kbin  .. '\nTim:' .. obj.kbout  
---     if obj.darkmode then
---         obj.disp_str = hs.styledtext.new(disp_str, {font={size=9.0, color={hex="#FFFFFF"}}})
---     else
---         obj.disp_str = hs.styledtext.new(disp_str, {font={size=9.0, color={hex="#000000"}}})
---     end
---     obj.menubar:setTitle(obj.disp_str)
---   --  hs.menubar:setClickCallback(rescan())
--- end
-
--- local menuitems_table = {}
--- local function rload()
---    -- hs.menubar:setClickCallback()
-    
---    -- if obj.interface then
---     obj.nowcap = string.format("%3.0f", hs.battery.capacity()/hs.battery.maxCapacity()*100) .. ' %'
-
---     obj.health = string.format("%2.0f", hs.battery.maxCapacity()/hs.battery.designCapacity()*100) .. ' %'
---     table.insert(menuitems_table, {
---         title = "实际电量 " .. obj.nowcap
-
---     })
---     table.insert(menuitems_table, {
---         title = "当前功率 " .. hs.battery.watts() .. 'W'
-
---     })
---     table.insert(menuitems_table, {
---         title = "当前电流 " .. hs.battery.amperage() .. 'mA'
-
---     })
---     table.insert(menuitems_table, {
---         title = "当前电压" .. hs.battery.voltage() .. 'mV'
---     })        
-
---     table.insert(menuitems_table, {
---          title = "预设容量:" .. hs.battery.designCapacity() .. 'mAh'
---      })
---     table.insert(menuitems_table, {
---          title = "当前最大容量:" .. hs.battery.maxCapacity() .. 'mAh'
---      })
---     table.insert(menuitems_table, {
---          title = "电池健康:" .. obj.health
---      })
---     table.insert(menuitems_table, {
---         title = "Rescan Interfaces",
---         fn = function() obj:rescan() end
---     })
--- --    hs.timer.doEvery(30, data_diff)
--- end
-
--- function obj:rescan()
---   --  obj.interface = hs.network.primaryInterfaces()
---   --  obj.darkmode = hs.osascript.applescript('tell application "System Events"\nreturn dark mode of appearance preferences\nend tell')
---     local menuitems_table = {}
---    -- if obj.interface then
---     obj.nowcap = string.format("%3.0f", hs.battery.capacity()/hs.battery.maxCapacity()*100) .. ' %'
-
---     obj.health = string.format("%2.0f", hs.battery.maxCapacity()/hs.battery.designCapacity()*100) .. ' %'
---     table.insert(menuitems_table, {
---         title = "实际电量 " .. obj.nowcap
-
---     })
---     table.insert(menuitems_table, {
---         title = "当前功率 " .. hs.battery.watts() .. 'W'
-
---     })
---     table.insert(menuitems_table, {
---         title = "当前电流 " .. hs.battery.amperage() .. 'mA'
-
---     })
---     table.insert(menuitems_table, {
---         title = "当前电压" .. hs.battery.voltage() .. 'mV'
---     })        
-
---     table.insert(menuitems_table, {
---          title = "预设容量:" .. hs.battery.designCapacity() .. 'mAh'
---      })
---     table.insert(menuitems_table, {
---          title = "当前最大容量:" .. hs.battery.maxCapacity() .. 'mAh'
---      })
---     table.insert(menuitems_table, {
---          title = "电池健康:" .. obj.health
---      })
---     table.insert(menuitems_table, {
---         title = "Rescan Interfaces",
---         fn = function() obj:rescan() end
---     })
-
---     obj.menubar:setMenu(rload)
--- --    obj.menubar.setClickCallback()
-
---     data_diff()
-
---     -- if obj.timer then
---     --     obj.timer:stop()
---     --     obj.timer = nil
---     -- end
---     --obj.timer = 
---     hs.timer.doEvery(30, data_diff)
-
-
---  --   end
-
---    --obj.menubar:setTitle("⚠︎")
-
--- end
-
---return obj
+return m
