@@ -10,8 +10,7 @@
 
 ```bash
 rm -r ~/.hammerspoon
-git clone https://github.com/phenixcxz/hammerspoon-config.git   
-~/.hammerspoon
+git clone https://github.com/phenixcxz/hammerspoon-config.git ~/.hammerspoon
 ```
 3. 打开hammerspoon
 
