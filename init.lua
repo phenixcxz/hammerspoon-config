@@ -16,9 +16,8 @@ require "sleep.sleep"		--睡眠wifi蓝牙管理
 --require "audio.audio"						  	
 --hs.loadSpoon('Calendar')
 --hs.loadSpoon('DeepLTranslate')
-hs.loadSpoon('SpeedMenu')	--网速显示
-hs.loadSpoon('Battery')		--电池信息显示
-print(hs.battery.getAll())
+--hs.loadSpoon('SpeedMenu')	--网速显示
+--hs.loadSpoon('Battery')		--电池信息显示
 --hs.loadSpoon('HSearch')
 
 
