@@ -38,7 +38,7 @@ local function data_diff()
             local timeH = (timeToFull-timeM)/60
             obj.kbout = string.format("%02d:%02d",timeH,timeM)
         else 
-            obj.kbout = '-----'
+            obj.kbout = '------'
         end
     else 
         if(batTime1 == 0) then 
@@ -50,7 +50,7 @@ local function data_diff()
             local timeRh = (timeReamin- timeRm)/60
             obj.kbout = string.format("%2d:%02d",timeRh,timeRm)
         else
-            obj.kbout = '-----'
+            obj.kbout = '------'
         end
     end
 
@@ -101,13 +101,17 @@ populateMenu = function(key)
         batD = 0
     end
 
-    battery = hs.battery.getAll()
+
+    local designCapacity = hs.battery.designCapacity()
+    local capacity = hs.battery.capacity()
+    local maxCapacity = hs.battery.maxCapacity()
+    -- battery = hs.battery.getAll()
     --数据格式化
     STIME = string.format("%2.0fday%2.0fh%2.0fmin",startD,startH,startM)    --开机时间
     BTIME = string.format("%2.0fday%2.0fh%2.0fmin",batD,batH,batM)      --使用电池时间
 
-    nowcap = string.format("%3.0f", battery.capacity/battery.maxCapacity*100) .. ' %'
-    health = string.format("%2.0f", battery.maxCapacity/battery.designCapacity*100) .. ' %'
+    nowcap = string.format("%3.0f", capacity/maxCapacity*100) .. ' %'
+    health = string.format("%2.0f", maxCapacity/designCapacity*100) .. ' %'
 
 
     menuData = {}
@@ -118,25 +122,25 @@ populateMenu = function(key)
 
     })
     table.insert(menuData, {
-        title = "当前功率：" .. battery.watts .. 'W'
+        title = "当前功率：" .. hs.battery.watts() .. 'W'
 
     })
     table.insert(menuData, {
-        title = "当前电流：" .. battery.amperage .. 'mA'
+        title = "当前电流：" .. hs.battery.amperage() .. 'mA'
 
     })
     table.insert(menuData, {
-        title = "当前电压：" .. battery.voltage .. 'mV'
+        title = "当前电压：" .. hs.battery.voltage() .. 'mV'
     })        
 
     table.insert(menuData, {
-         title = "预设容量：" .. battery.designCapacity .. 'mAh'
+         title = "预设容量：" .. designCapacity .. 'mAh'
      })
     table.insert(menuData, {
-         title = "最大容量：" .. battery.maxCapacity .. 'mAh'
+         title = "最大容量：" .. maxCapacity .. 'mAh'
      })
     table.insert(menuData, {
-         title = "当前电量：" .. battery.capacity .. 'mAh'
+         title = "当前电量：" .. capacity .. 'mAh'
      })
     table.insert(menuData, {
          title = "电池健康：" .. health
@@ -156,7 +160,7 @@ end
 function obj:rescan()
     obj.menubar:setMenu(populateMenu)
     data_diff()
-    timer = hs.timer.new(5, data_diff)
+    timer = hs.timer.new(4, data_diff)
     timer:start()
 end
 

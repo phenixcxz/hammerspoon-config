@@ -1,5 +1,6 @@
 require "hs.application"
-local hotkey = require "hs.hotkey"
+--local hotkey = require "hs.hotkey"
+hyper = {'ctrl', 'cmd'}
 local window = require "hs.window"
 
 
