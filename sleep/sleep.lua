@@ -76,6 +76,7 @@ function caffeinateCallback(eventType)
     end
 end
 
+resetAudio()
 
 caffeinateWatcher = hs.caffeinate.watcher.new(caffeinateCallback)
 caffeinateWatcher:start()

@@ -103,7 +103,7 @@ function obj:rescan()
             obj.timer:stop()
             obj.timer = nil
         end
-        obj.timer = hs.timer.doEvery(1, data_diff)
+        obj.timer = hs.timer.doEvery(2, data_diff)
     end
     table.insert(menuitems_table, {
         title = "Rescan Network Interfaces",
