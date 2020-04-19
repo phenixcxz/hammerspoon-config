@@ -6,7 +6,7 @@ require "reload.reload"
 --require "usb.usb"
 require "window.window"		--快捷键调节窗口大小
 --require "wifi.wifi"
---require "clipboard.clipboard"	--剪切板记录
+require "clipboard.clipboard"	--剪切板记录
 require "sleep.sleep"		--睡眠wifi蓝牙管理
 --require "translate.translate"
 --require "statuslets.statuslets"

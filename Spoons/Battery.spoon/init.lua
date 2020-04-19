@@ -7,32 +7,32 @@ local h1 = hs.timer.hours(1)
 local d1 = hs.timer.days(1)
 local m1 = hs.timer.minutes(1)
 
-local batTime1 = hs.timer.secondsSinceEpoch()
-local batTime2 = batTime1
-local batTime = 0
+-- local batTime1 = hs.timer.secondsSinceEpoch()
+-- --local batTime2 = batTime1
+-- local batTime = 0
 
 --image1 = "......111.......\n......111.......\n1..............1\n1..............1\n"
 function obj:init()
     self.menubar = hs.menubar.new()
     obj:rescan()
-
 end
-
 
 local function data_diff()
 
-   -- battery = hs.battery.getAll()
 
     --电量百分比计算   
     obj.kbin = string.format("%3.0f",hs.battery.percentage()) .. '%'
    
     --剩余时间计算
-    timeToFull =hs.battery.timeToFullCharge()
-    amperage = hs.battery.amperage()
-    timeReamin = hs.battery.timeRemaining()
 
-    if(amperage >= 0) then
-        batTime1 = 0;       --使用电池时间归零
+    local amperage = hs.battery.amperage()
+
+--    local isCharged = hs.battery.isCharged()
+    local powerSource =hs.battery.powerSource()
+    local timeToFull =hs.battery.timeToFullCharge()
+    if(powerSource == 'AC Power') then
+
+   --     batTime1 = 0;       --使用电池时间归零
         if(timeToFull >0) then 
             local timeM = timeToFull%60
             local timeH = (timeToFull-timeM)/60
@@ -41,22 +41,28 @@ local function data_diff()
             obj.kbout = '------'
         end
     else 
-        if(batTime1 == 0) then 
-            batTime1 = hs.timer.secondsSinceEpoch()     --记录开始使用电池时间
-        end
+        local timeReamin = hs.battery.timeRemaining()
+        -- if(batTime1 == 0) then 
+        --     batTime1 = hs.timer.secondsSinceEpoch()     --记录开始使用电池时间
+        -- end
 
-        if(timeReaminr>0) then 
+        -- if(timeReamin) then
+        if(timeReamin>0) then 
             local timeRm = timeReamin%60
             local timeRh = (timeReamin- timeRm)/60
             obj.kbout = string.format("%2d:%02d",timeRh,timeRm)
-        else
-            obj.kbout = '------'
+        else 
+            obj.kbout = '------'                
         end
+
+        -- else
+        --     obj.kbout = '------'
+        -- end
     end
 
     --充电状态指示
     local disp_str
-    if (amperage>0) then
+    if (powerSource == 'AC Power') then
         if(timeToFull> 0 or timeToFull < 0) then 
             disp_str = '充Cap:' .. obj.kbin  .. '\n电Tim:' .. obj.kbout   
         else 
@@ -80,26 +86,26 @@ end
 
 populateMenu = function(key)
     --开机时间计算
-    startTime = hs.timer.absoluteTime()
-    startS = startTime/1000000000
+    local startTime = hs.timer.absoluteTime()
+    local startS = startTime/1000000000
 
-    startM = (startS%h1)/m1
-    startH = (startS%d1-startM*60)/h1
-    startD = (startS-startH*h1)/d1
+    local startM = (startS%h1)/m1
+    local startH = (startS%d1-startM*60)/h1
+    local startD = (startS-startH*h1)/d1
 
-    --使用电池时间计算
-    if(batTime1 >0) then 
-        batTime2 = hs.timer.secondsSinceEpoch()
-        batTime = batTime2-batTime1
-        batM = (batTime%h1)/m1
-        batH = (batTime%d1 - batM*m1)/h1
-        batD = (batTime-batH*h1)/d1
-    else
-        batTime = 0
-        batM = 0
-        batH = 0
-        batD = 0
-    end
+    -- --使用电池时间计算
+    -- if(batTime1 >0) then 
+    --     batTime2 = hs.timer.secondsSinceEpoch()
+    --     batTime = batTime2-batTime1
+    --     batM = (batTime%h1)/m1
+    --     batH = (batTime%d1 - batM*m1)/h1
+    --     batD = (batTime-batH*h1)/d1
+    -- else
+    --     batTime = 0
+    --     batM = 0
+    --     batH = 0
+    --     batD = 0
+    -- end
 
 
     local designCapacity = hs.battery.designCapacity()
@@ -107,15 +113,14 @@ populateMenu = function(key)
     local maxCapacity = hs.battery.maxCapacity()
     -- battery = hs.battery.getAll()
     --数据格式化
-    STIME = string.format("%2.0fday%2.0fh%2.0fmin",startD,startH,startM)    --开机时间
-    BTIME = string.format("%2.0fday%2.0fh%2.0fmin",batD,batH,batM)      --使用电池时间
+    local STIME = string.format("%2.0fday%2.0fh%2.0fmin",startD,startH,startM)    --开机时间
+ --   local BTIME = string.format("%2.0fday%2.0fh%2.0fmin",batD,batH,batM)      --使用电池时间
 
-    nowcap = string.format("%3.0f", capacity/maxCapacity*100) .. ' %'
-    health = string.format("%2.0f", maxCapacity/designCapacity*100) .. ' %'
+    local nowcap = string.format("%3.0f", capacity/maxCapacity*100) .. ' %'
+    local health = string.format("%2.0f", maxCapacity/designCapacity*100) .. ' %'
 
 
     menuData = {}
-
 
     table.insert(menuData, {
         title = "实际电量：" .. nowcap
@@ -149,19 +154,24 @@ populateMenu = function(key)
     table.insert(menuData,{
         title = "系统启动时间：" .. STIME 
     })
-    table.insert(menuData,{
-        title = "使用电池时间：" .. BTIME 
-    })
+    -- table.insert(menuData,{
+    --     title = "使用电池时间：" .. BTIME 
+    -- })
     return menuData
 end
 
+function hello()
 
+end
 
 function obj:rescan()
     obj.menubar:setMenu(populateMenu)
     data_diff()
-    timer = hs.timer.new(4, data_diff)
-    timer:start()
+    if obj.timer then
+        obj.timer:stop()
+        obj.timer = nil
+    end
+    obj.timer = hs.timer.doEvery(3, data_diff)
 end
 
 return obj
