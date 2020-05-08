@@ -11,7 +11,7 @@ print(hs.audiodevice.allInputDevices())
 
 print(audio)
 
-audioIn = hs.audiodevice.defaultInputDevice()
+audioOut = hs.audiodevice.defaultOutputDevice()
 print(audioIn)
-audioIn:setDefaultInputDevice()
-audio:setDefaultOutputDevice()
+-- audioIn:setDefaultInputDevice()
+-- audio:setDefaultOutputDevice()

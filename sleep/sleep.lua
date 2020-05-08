@@ -62,16 +62,16 @@ function caffeinateCallback(eventType)
     if (eventType == hs.caffeinate.watcher.screensDidUnlock) then
       wifiSwitchOn()
       connectBluetooth()
-      Chinese()     
+   --   Chinese()     
     end
 
     if (eventType == hs.caffeinate.watcher.systemWillSleep) then
-      bluetoothSwitchOff()
+    --  bluetoothSwitchOff()
       wifiSwitchOff()
 
-    elseif (eventType == hs.caffeinate.watcher.systemDidWake) then
+   -- elseif (eventType == hs.caffeinate.watcher.systemDidWake) then
 
-      bluetoothSwitchOn()
+   --   bluetoothSwitchOn()
      -- resetAudio()
    --   wifiSwitchOn()
    --   resetAudio()
@@ -80,6 +80,6 @@ function caffeinateCallback(eventType)
 end
 
 --resetAudio()
-
+--Chinese()
 caffeinateWatcher = hs.caffeinate.watcher.new(caffeinateCallback)
 caffeinateWatcher:start()

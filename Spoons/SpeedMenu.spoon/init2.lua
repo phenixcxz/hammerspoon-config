@@ -1,12 +1,25 @@
+--- === SpeedMenu ===
+---
+--- Menubar netspeed meter
+---
+--- Download: [https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpeedMenu.spoon.zip](https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpeedMenu.spoon.zip)
+
 local obj={}
 obj.__index = obj
+
+obj.interface = hs.network.primaryInterfaces()
+
+obj.instr = 'netstat -ibn | grep -e ' .. obj.interface .. ' -m 1 | awk \'{print $7}\''
+obj.outstr = 'netstat -ibn | grep -e ' .. obj.interface .. ' -m 1 | awk \'{print $10}\''
+
+obj.inseq = hs.execute(obj.instr)
+obj.outseq = hs.execute(obj.outstr)
 
 function obj:init()
     self.menubar = hs.menubar.new()
     obj:rescan()
 end
 
-local time = 2
 
 local function data_diff()
     local in_seq = hs.execute(obj.instr)
@@ -14,15 +27,15 @@ local function data_diff()
     local in_diff = in_seq - obj.inseq
     local out_diff = out_seq - obj.outseq
 
-    if in_diff/1024/time > 1024 then
-        obj.kbin = string.format("%4.2f", in_diff/1024/1024/time) .. ' mb/s'
+    if in_diff/1024 > 1024 then
+        obj.kbin = string.format("%4.2f", in_diff/1024/1024) .. ' mb/s'
     else
-        obj.kbin = string.format("%4.2f", in_diff/1024/time) .. ' kb/s'
+        obj.kbin = string.format("%4.2f", in_diff/1024) .. ' kb/s'
     end
-    if out_diff/1024/time > 1024 then
-        obj.kbout = string.format("%4.2f", out_diff/1024/1024/time) .. ' mb/s'
+    if out_diff/1024 > 1024 then
+        obj.kbout = string.format("%4.2f", out_diff/1024/1024) .. ' mb/s'
     else
-        obj.kbout = string.format("%4.02f", out_diff/1024/time) .. ' kb/s'
+        obj.kbout = string.format("%4.02f", out_diff/1024) .. ' kb/s'
     end
 
     local disp_str = '⥄ ' .. obj.kbout .. '\n⥂ ' .. obj.kbin
@@ -35,11 +48,6 @@ local function data_diff()
     obj.inseq = in_seq
     obj.outseq = out_seq
 end
-
---- SpeedMenu:rescan()
---- Method
---- Redetect the active interface, darkmode …And redraw everything.
----
 
 populateMenu = function(key)
     menuitems_table = {}
@@ -79,25 +87,15 @@ populateMenu = function(key)
     return menuitems_table
 end
 
+
 function obj:rescan()
-    obj.interface = hs.network.primaryInterfaces()
-    obj.darkmode = hs.osascript.applescript('tell application "System Events"\nreturn dark mode of appearance preferences\nend tell')
-  
-    if obj.interface then
-        obj.instr = 'netstat -ibn | grep -e ' .. obj.interface .. ' -m 1 | awk \'{print $7}\''
-        obj.outstr = 'netstat -ibn | grep -e ' .. obj.interface .. ' -m 1 | awk \'{print $10}\''
-
-        obj.inseq = hs.execute(obj.instr)
-        obj.outseq = hs.execute(obj.outstr)
-
-        if obj.timer then
-            obj.timer:stop()
-            obj.timer = nil
-        end
-        obj.timer = hs.timer.doEvery(time, data_diff)
+    obj.menubar:setMenu(populateMenu)
+    data_diff()
+    if obj.timer then
+        obj.timer:stop()
+        obj.timer = nil
     end
-    obj.menubar:setTitle("⚠︎")
-    obj.menubar:setMenu(populateMenu) 
+    obj.timer = hs.timer.doEvery(3, data_diff)
 end
 
 return obj
