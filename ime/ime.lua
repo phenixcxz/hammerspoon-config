@@ -1,26 +1,12 @@
 
 methodName = "搜狗拼音"
 
-local function Chinese()
-    currentMethod =hs.keycodes.currentMethod()
-    if  currentMethod ~= methodName then
+local function Sougou()
+    if  hs.keycodes.currentMethod() ~= methodName then
         hs.keycodes.setMethod(methodName)
-        -- updateFocusAppInputMethod()
-        -- hs.keycodes.currentSourceID("com.sogou.inputmethod.sogou.pinyin")
-    --     -- print("设置输入法")
-    --     break
     end
-    -- hs.keycodes.setMethod("com.sogou.inputmethod.sogou.pinyin")
 end
 
---Chinese()
--- local function Chinese()
---    hs.keycodes.currentSourceID("com.baidu.inputmethod.BaiduIM.pinyin")
--- end
-
--- local function English()
---     hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
--- end
 
 -- app to expected ime config
 local app2Ime = {
@@ -84,10 +70,11 @@ local app2Ime = {
 
 -- Handle cursor focus and application's screen manage.
 function applicationWatcher(appName, eventType, appObject)
-    -- if (eventType == hs.application.watcher.activated) then
-    --     updateFocusAppInputMethod()
-    -- end
-    Chinese()
+    if (eventType == hs.application.watcher.activated) then
+        -- updateFocusAppInputMethod()
+        Sougou()        
+    end
+
 end
 
 appWatcher = hs.application.watcher.new(applicationWatcher)

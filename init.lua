@@ -11,8 +11,8 @@ require "window.window"		--快捷键调节窗口大小
 --require "translate.translate"
 --require "statuslets.statuslets"
 --AClock.spoonrequire "battery.battery"
-require "volume.volume"
 -- require "weather.weather"
+-- require "volume.volume"
 --require "speaker.speaker"
 --require "audio.audio"						  	
 --hs.loadSpoon('Calendar')
